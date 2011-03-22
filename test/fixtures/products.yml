@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  description: MyText
+  image_url: MyString
+  price: 9.99
+
+two:
+  title: MyString
+  description: MyText
+  image_url: MyString
+  price: 9.99
+
+ruby:
+  title: Programming in Ruby
+  description:
+    Ruby is the fastest growing and exciting language in the planet    with chad and ford and needhams money on it thinking that proto    and arun also into it
+  price:  49.50
+  image_url: ruby.gif
+
