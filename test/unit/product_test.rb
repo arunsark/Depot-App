@@ -15,7 +15,7 @@ class ProductTest < ActiveSupport::TestCase
 
   test "product price must be postive" do
     product = Product.new(:title=>"My Title",
-                          :description => "desc desc",
+                          :description => "descxxxdesc",
                           :image_url => "desc.jpg")
     product.price = -1
     assert product.invalid?
@@ -49,7 +49,7 @@ http://a.com/ab/ab/fred.gif}
   test "product is not valid without unique title" do
 
     product = Product.new(:title => products(:ruby).title,
-                          :description => "xxxx",
+                          :description => "xxxxxxx",
                           :image_url => "ruby.gif",
                           :price => 49)
     assert product.invalid?
@@ -61,7 +61,7 @@ http://a.com/ab/ab/fred.gif}
    test "product is not valid without unique title - i18n" do
 
     product = Product.new(:title => products(:ruby).title,
-                          :description => "xxxx",
+                          :description => "xxxxxxxxxxx",
                           :image_url => "ruby.gif",
                           :price => 49)
     assert product.invalid?
@@ -69,10 +69,21 @@ http://a.com/ab/ab/fred.gif}
     assert_equal I18n.translate('activerecord.errors.messages.taken'),product.errors[:title].join('; ')
   end
 
+  test "product has minimum 10 character description" do
+    product = Product.new(:title => "Invalid Description",
+                          :description => "xxx",
+                          :image_url => "ruby.gif",
+                          :price => 49)
+    assert product.invalid?, "#{product.description} is too short"
+    assert_equal "is too short (minimum is 10 characters)",
+    product.errors[:description].join(' ')
+
+  end
+
 
   def new_product(image_url)
     Product.new(:title=>"Title",
-                :description => "Desc Desc",
+                :description => "Desc Desc Desc",
                 :image_url => image_url,
                 :price => 10.95
                 )

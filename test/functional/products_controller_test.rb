@@ -52,4 +52,12 @@ class ProductsControllerTest < ActionController::TestCase
 
     assert_redirected_to products_path
   end
+
+  test "should have relevant selectors in index page" do
+    get :index
+    assert_select("#product_list")
+    assert_select ".list_actions" do
+      assert_select "a" 
+    end
+  end
 end
