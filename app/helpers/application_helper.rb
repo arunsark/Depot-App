@@ -13,4 +13,11 @@ module ApplicationHelper
     "It's " + time_24_hour + " on " + full_date
   end
 
+  def hidden_div_if(condition,attributes={},&block)
+    if condition
+      attributes["style"] = "display: none"
+    end
+    content_tag("div",attributes,&block)
+  end
+
 end

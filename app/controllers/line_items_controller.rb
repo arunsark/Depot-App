@@ -47,7 +47,8 @@ class LineItemsController < ApplicationController
     respond_to do |format|
       if @line_item.save
         reset_visit_count
-        format.html { redirect_to(@line_item.cart) }
+        format.html { redirect_to(store_url) }
+        format.js { @current_item = @line_item }
         format.xml  { render :xml => @line_item, :status => :created, :location => @line_item }
       else
         format.html { render :action => "new" }
@@ -60,10 +61,10 @@ class LineItemsController < ApplicationController
   # PUT /line_items/1.xml
   def update
     @line_item = LineItem.find(params[:id])
-
     respond_to do |format|
       if @line_item.update_attributes(params[:line_item])
-        format.html { redirect_to(@line_item, :notice => 'Line item was successfully updated.') }
+        @line_item.reduce_qty
+        format.html { redirect_to(store_url, :notice => 'Line item was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -83,4 +84,5 @@ class LineItemsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
 end

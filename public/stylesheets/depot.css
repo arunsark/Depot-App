@@ -127,7 +127,7 @@ float: left;
 background: #141;
 }
 #main {
-margin-left: 17em;
+margin-left: 19em;
 padding-top: 4ex;
 padding-left: 2em;
 background: white;
@@ -137,7 +137,7 @@ float: left;
 padding-top: 1em;
 padding-left: 1em;
 padding-bottom: 1em;
-width: 16em;
+width: 18em;
 background: #141;
 color: #bfb;
 }
@@ -163,3 +163,16 @@ text-align: right;
 font-weight: bold;
 border-top: 1px solid #595;
 }
+
+
+#cart, #cart table {
+font-size: smaller;
+color: white;
+}
+
+#cart table {
+border-top: 1px dotted #595;
+border-bottom: 1px dotted #595;
+margin-bottom: 10px;
+}
+
