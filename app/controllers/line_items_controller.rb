@@ -3,7 +3,7 @@ class LineItemsController < ApplicationController
   # GET /line_items.xml
   def index
     @line_items = LineItem.all
-
+    @cart = current_cart
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @line_items }
@@ -14,6 +14,7 @@ class LineItemsController < ApplicationController
   # GET /line_items/1.xml
   def show
     @line_item = LineItem.find(params[:id])
+    @cart = current_cart
 
     respond_to do |format|
       format.html # show.html.erb
@@ -62,14 +63,27 @@ class LineItemsController < ApplicationController
   def update
     @line_item = LineItem.find(params[:id])
     respond_to do |format|
-      if @line_item.update_attributes(params[:line_item])
-        @line_item.reduce_qty
-        format.html { redirect_to(store_url, :notice => 'Line item was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @line_item.errors, :status => :unprocessable_entity }
-      end
+      
+      if params[:modify] == "line_qty"
+        @cart = Cart.find(session[:cart_id])
+
+        destroyed = @line_item.reduce_qty?
+        format.js {
+          if destroyed
+            @current_item = nil
+          else
+            @current_item = @line_item
+          end
+        }
+      else        
+        if @line_item.update_attributes(params[:line_item])
+          format.html { redirect_to(store_url, :notice => 'Line item was successfully updated.') }
+          format.xml  { head :ok }
+        else
+          format.html { render :action => "edit" }       
+          format.xml  { render :xml => @line_item.errors, :status => :unprocessable_entity }
+        end
+      end      
     end
   end
 

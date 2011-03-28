@@ -6,6 +6,6 @@
   <td><%= line_item.quantity %> &times; </td>
 <td><%= line_item.product.title %></td>
 <td class="item_price"> <%= number_to_currency(line_item.total_price) %> </td>
-<td><%= link_to "D",line_item, :method=>:put, :action=>:update %>
-<td><%= button_to "Delete", line_item, :method => :delete, :confirm => "Are you sure?" %>
+<td><%= link_to "-","#{line_item_path(line_item.id)}?modify=line_qty", :method=>:put, :action=>:update, :remote=>true %> </td>
+<td><%= button_to "Delete", line_item, :method => :delete, :confirm => "Are you sure?" %> </td>
 </tr>

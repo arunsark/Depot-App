@@ -62,7 +62,6 @@ class CartsController < ApplicationController
   # PUT /carts/1.xml
   def update
     @cart = Cart.find(params[:id])
-
     respond_to do |format|
       if @cart.update_attributes(params[:cart])
         format.html { redirect_to(@cart, :notice => 'Cart was successfully updated.') }
@@ -71,7 +70,7 @@ class CartsController < ApplicationController
         format.html { render :action => "edit" }
         format.xml  { render :xml => @cart.errors, :status => :unprocessable_entity }
       end
-    end
+    end      
   end
 
   # DELETE /carts/1

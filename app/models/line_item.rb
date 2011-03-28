@@ -6,13 +6,15 @@ class LineItem < ActiveRecord::Base
     product.price * quantity
   end
 
-  def reduce_qty
+  def reduce_qty?
     qty = quantity - 1
     if qty == 0
       destroy
+      return true      
     else
       update_attribute(:quantity , qty )      
     end
+    return false
   end
 
 end
