@@ -3,6 +3,7 @@ require 'test_helper'
 class LineItemsControllerTest < ActionController::TestCase
   fixtures :products
   setup do
+    @cart = carts(:one)
     @line_item = line_items(:one)
   end
 
@@ -47,6 +48,17 @@ class LineItemsControllerTest < ActionController::TestCase
   test "should update line_item" do
     put :update, :id => @line_item.to_param, :line_item => @line_item.attributes
     assert_redirected_to store_path
+  end
+
+  test "minus should reduce quantity of line" do
+    @line_item = line_items(:ruby)
+    session[:cart_id] = @cart.id
+        
+    xhr :post, :update, :id => @line_item.id, :modify => "line_qty"
+    assert_response :success
+    assert_select_rjs :replace_html, 'cart' do
+       assert_select 'tr td',/2 &times;/
+     end    
   end
 
   test "should destroy line_item" do
